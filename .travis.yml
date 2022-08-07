@@ -32,6 +32,16 @@ deploy:
     local_dir: deploy # before_deploy에서 생성한 디렉토리
     wait-until-deployed: true
 
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: freelec-springboot-build-space
+    key : freelec-springboot2-webservice.zip
+    bundle-type: zip
+    application: freelec-springboot2-webservice
+    deployment-group: freelec-springboot2-webservice-group
+    region: ap-northeast-2
+    wait-until-deployed: true
 
 script: "./gradlew clean build"
 
