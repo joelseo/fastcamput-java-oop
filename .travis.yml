@@ -16,7 +16,10 @@ cache:   # gradle을 통해 의존성을 받게 되면 이를 해당 디렉토�
 before_install:  # 모든 사용자한테 gradlew에 대한 접근권한을 풀어준다.
   - chmod +x gradlew
 #
-#before_deploy:
+before_deploy:
+  - zip -r freelec-springboot2-webservice *
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
 #  - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성 중
 #  - cp scripts/*.sh before-deploy/
 #  - cp appspec.yml before-deploy/
@@ -25,16 +28,16 @@ before_install:  # 모든 사용자한테 gradlew에 대한 접근권한을 풀�
 #  - cd ../ && mkdir -p deploy
 #  - mv before-deploy/before-deploy.zip deploy/freelec-springboot2-webservice.zip
 
-#deploy:
-#  - provider: s3
-#    access_key_id: $AWS_ACCESS_KEY
-#    secret_access_key: $AWS_SECRET_KEY
-#    bucket: freelec-springboot-build-space
-#    region: ap-northeast-2
-#    skip_cleanup: true
-#    acl: private # zip 파일접근을 private으로
-#    local_dir: deploy # before_deploy에서 생성한 디렉토리
-#    wait-until-deployed: true
+deploy: # S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위들을 선언한다.
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY  # Travice repo settings에 설정된 값.
+    secret_access_key: $AWS_SECRET_KEY # Travice repo settings에 설정된 값.
+    bucket: freelec-springboot-build3 # S3버킷
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private # zip 파일접근을 private으로
+    local_dir: deploy # before_deploy에서 생성한 디렉토리. 해당 위치의 파일들만 S3로 저장한다.
+    wait-until-deployed: true
 #
 #  - provider: codedeploy
 #    access_key_id: $AWS_ACCESS_KEY
