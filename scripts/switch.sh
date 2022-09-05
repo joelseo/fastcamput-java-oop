@@ -16,6 +16,6 @@ function switch_proxy() {
 #  echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
 #  echo "> 엔진엑스 Reload"
 #  sudo service nginx reload
-   ssh ec2-user@10.1.1.37 /home/ec2-user/app/step3/scripts/switch.sh 8080
+   ssh ec2-user@10.1.1.37 /home/ec2-user/app/step3/scripts/switch.sh $IDLE_PORT
   # reload는 restar와 달리 끊김 없이 다시 불러온다.
 }
