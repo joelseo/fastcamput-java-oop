@@ -7,7 +7,7 @@ source ${ABSDIR}/profile.sh  # java로 보면 import 기능
 function switch_proxy() {
   IDLE_PORT=$(find_idle_port)
 
-  echo "> 전환할 Port : $IDLE_PORT"
+  echo "> 전환할 Port: $IDLE_PORT"
   echo "> Port 전환"
 
   # 하나의 문장을 만들어 파이프라인으로 넘겨주기 위해 echo를 사용한다.
